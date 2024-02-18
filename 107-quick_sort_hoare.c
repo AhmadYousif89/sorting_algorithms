@@ -2,8 +2,6 @@
 
 /**
  * swap - Swap two numbers
- * @arr: pointer to the array
- * @size: size of the array
  * @a: pointer to number
  * @b: pointer to number
  */
@@ -31,12 +29,10 @@ int partition(int *arr, size_t size, int lo, int hi)
 
 	while (i < j)
 	{
-		do
-		{
+		do {
 			i++;
 		} while (arr[i] < pivot);
-		do
-		{
+		do {
 			j--;
 		} while (arr[j] > pivot);
 
