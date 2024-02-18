@@ -24,7 +24,9 @@ void swap(int *arr, size_t size, int *a, int *b)
  * @size: size of the array
  * @lo: starting index
  * @hi: ending index
+ *
  * Return: the pivot index
+ * Description: Uses the Lomuto partition scheme.
  */
 size_t partition(int *arr, size_t size, size_t lo, size_t hi)
 {
@@ -41,20 +43,33 @@ size_t partition(int *arr, size_t size, size_t lo, size_t hi)
 }
 
 /**
+ * recursive_sort - Recursivly sort the array.
+ * @arr: pointer to the array.
+ * @size: The size of the array.
+ * @lo: The starting index.
+ * @hi: The ending index.
+ */
+void recursive_sort(int *arr, size_t size, int lo, int hi)
+{
+	int pivot_idx;
+
+	if (lo < hi)
+	{
+		pivot_idx = partition(arr, size, lo, hi);
+		recursive_sort(arr, size, lo, pivot_idx - 1);
+		recursive_sort(arr, size, pivot_idx + 1, hi);
+	}
+}
+
+/**
  * quick_sort - The quick sorting algorithm
  * @arr: pointer to the array
  * @size: size of the array
  */
 void quick_sort(int *arr, size_t size)
 {
-	size_t pivot_idx;
-
 	if (arr == NULL || size < 2)
 		return;
 
-	pivot_idx = partition(arr, size, 0, size - 1);
-	/* First half to the pivot*/
-	quick_sort(arr, pivot_idx);
-	/* Second half after the pivot */
-	quick_sort(arr + pivot_idx + 1, size - pivot_idx - 1);
+	recursive_sort(arr, size, 0, size - 1);
 }
