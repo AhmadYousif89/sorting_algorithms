@@ -7,9 +7,10 @@
  *
  * Return: the max number
  */
-size_t get_max(int *array, size_t size)
+int get_max(int *array, size_t size)
 {
-	size_t i = 0, max = array[0];
+	size_t i = 0;
+	int max = array[0];
 
 	for (; i < size; i++)
 		if (array[i] > max)
