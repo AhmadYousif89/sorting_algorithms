@@ -67,13 +67,13 @@ void swap_backwards(listint_t **list, listint_t **tail, listint_t **current)
 void cocktail_sort_list(listint_t **list)
 {
 	listint_t *head, *tail;
-	int swapped = 0;
+	int swapped;
 
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
 
 	tail = *list;
-	while (tail)
+	while (tail->next)
 		tail = tail->next;
 
 	do {
