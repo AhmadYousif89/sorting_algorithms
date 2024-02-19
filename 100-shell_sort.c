@@ -11,10 +11,10 @@ size_t gap_size(size_t size)
 {
 	size_t gap = 1;
 
-	while (gap < size)
-		gap = gap * 3 + 1; /* Get max gap size */
+	while (gap < size)	   /* if size = 8 */
+		gap = gap * 3 + 1; /* max gap = 13 */
 
-	return ((gap - 1) / 3); /* Get required gap size */
+	return ((gap - 1) / 3); /* actual gap: (13 -1) / 3 = 4 */
 }
 
 /**
@@ -24,18 +24,21 @@ size_t gap_size(size_t size)
  */
 void shell_sort(int *arr, size_t size)
 {
-	size_t gap, i, j;
-	int tmp;
-
-	for (gap = gap_size(size); gap > 0; gap = (gap - 1) / 3)
+	size_t i, j, gap = gap_size(size);
+	int temp;
+	/* if size = 8 | pass 1: gap = 4 | pass 2: gap = 1 */
+	while (gap > 0)
 	{
+		/* pass 1: 4 ... 8 | 5 ... 8 | 6 ... 8 | 7 ... 8 */
 		for (i = gap; i < size; i++)
 		{
-			tmp = arr[i];
-			for (j = i; j > gap - 1 && tmp < arr[j - gap]; j -= gap)
-				arr[j] = arr[j - gap];
-			arr[j] = tmp;
+			temp = arr[i]; /* temp = value at idx [4]*/
+			for (j = i; j > gap - 1 && temp < arr[j - gap]; j -= gap)
+				arr[j] = arr[j - gap]; /* place value at idx [0] in idx [4] etc.. */
+			arr[j] = temp;			   /* place value at idx [4] in idx [0] etc.. */
 		}
 		print_array(arr, size);
+		/* pass 2: 1 ... 8 | 2 ... 8 | 3 ... 8 | 4 ... 8 */
+		gap = (gap - 1) / 3;
 	}
 }
