@@ -10,13 +10,13 @@
  */
 void merge_sorted_arrays(int arr[], int start, int mid, int end, int temp[])
 {
-	int i;		   /* index for the full length original array */
-	int m = mid;   /* index for right sub-arrays (from index mid to end-1) */
-	int s = start; /* index for left sub-arrays (from index start to mid-1) */
+	int i;		   /* Index for the full length original array */
+	int m = mid;   /* Index for right sub-arrays (from index mid to end-1) */
+	int s = start; /* Index for left sub-arrays (from index start to mid-1) */
 
 	for (i = start; i < end; i++)
 	{
-		/* if right sub-arrays still have elements */
+		/* If right sub-arrays still have elements */
 		/* AND the (s) index is not equal to (mid) index */
 		/* OR the element in left sub-arr is > than the one in the right sub-arr */
 		if (m < end && (s >= mid || temp[s] > temp[m]))
@@ -43,14 +43,14 @@ void merge_sorted_arrays(int arr[], int start, int mid, int end, int temp[])
  */
 void merge_sort_recurtion(int arr[], int start, int end, int temp[])
 {
-	int mid = start + (end - start) / 2; /* prevent potential int overflow */
-
+	int mid = start + (end - start) / 2; /* Prevent potential int overflow */
+	/* If any sub-array has less than 2 elements, then it's sorted */
 	if (end - start < 2)
 		return;
 
 	merge_sort_recurtion(temp, start, mid, arr);
 	merge_sort_recurtion(temp, mid, end, arr);
-
+	/* Merge the sorted left and right halves back into the original array */
 	merge_sorted_arrays(arr, start, mid, end, temp);
 }
 
