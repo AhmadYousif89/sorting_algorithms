@@ -36,11 +36,18 @@ Sorting algorithms are methods used to arrange elements in a specific order, oft
 
 This repository includes implementations of the following sorting algorithms:
 
-- Bubble Sort
-- Selection Sort
-- Insertion Sort
-- Merge Sort
-- Quick Sort
+1. [Bubble Sort](https://en.wikipedia.org/wiki/Bubble_sort)
+2. [Insertion Sort](https://en.wikipedia.org/wiki/Insertion_sort)
+3. [Selection Sort](https://en.wikipedia.org/wiki/Selection_sort)
+4. [Quick Sort](https://en.wikipedia.org/wiki/Quick_sort) *( Lomuto partition scheme )*
+5. [Shell Sort](https://en.wikipedia.org/wiki/Shell_sort) *( Knuth sequence )*
+6. [Cocktail Shaker Sort](https://en.wikipedia.org/wiki/Cocktail_shaker_sort)
+7. [Counting Sort](https://en.wikipedia.org/wiki/Counting_sort)
+8. [Merge Sort](https://en.wikipedia.org/wiki/Merge_sort)
+9. [Heap Sort](https://en.wikipedia.org/wiki/Heap_sort) *( Max Heap )*
+10. [Radix Sort](https://en.wikipedia.org/wiki/Radix_sort) *( LSD )*
+11. [Bitonic Sort](https://en.wikipedia.org/wiki/Bitonic_sort)
+12. [Quick Sort](https://en.wikipedia.org/wiki/Quick_sort) *( Hoare partition scheme )*
 
 <br>
 
