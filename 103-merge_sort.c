@@ -10,16 +10,21 @@
  */
 void merge_sorted_arrays(int arr[], int start, int mid, int end, int temp[])
 {
-	int i, m = mid, s = start;
+	int i;		   /* index for the full length original array */
+	int m = mid;   /* index for right sub-arrays (from index mid to end-1) */
+	int s = start; /* index for left sub-arrays (from index start to mid-1) */
 
 	for (i = start; i < end; i++)
 	{
-		if (s < mid && (m >= end || temp[s] <= temp[m]))
-			arr[i] = temp[s++];
+		/* if right sub-arrays still have elements */
+		/* AND the (s) index is not equal to (mid) index */
+		/* OR the element in left sub-arr is > than the one in the right sub-arr */
+		if (m < end && (s >= mid || temp[s] > temp[m]))
+			arr[i] = temp[m++]; /* copy from right sub-arrays */
 		else
-			arr[i] = temp[m++];
+			arr[i] = temp[s++]; /* copy from left sub-arrays */
 	}
-
+	/* Print ... */
 	printf("Merging...\n");
 	printf("[left]: ");
 	print_array(temp + start, mid - start);
