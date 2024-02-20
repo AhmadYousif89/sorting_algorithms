@@ -12,12 +12,6 @@ void merge_sorted_arrays(int arr[], int start, int mid, int end, int temp[])
 {
 	int i, m = mid, s = start;
 
-	printf("Merging...\n");
-	printf("[left]: ");
-	print_array(arr + start, mid - start);
-	printf("[right]: ");
-	print_array(arr + mid, end - mid);
-	/* Compare values */
 	for (i = start; i < end; i++)
 	{
 		if (s < mid && (m >= end || temp[s] <= temp[m]))
@@ -26,6 +20,11 @@ void merge_sorted_arrays(int arr[], int start, int mid, int end, int temp[])
 			arr[i] = temp[m++];
 	}
 
+	printf("Merging...\n");
+	printf("[left]: ");
+	print_array(temp + start, mid - start);
+	printf("[right]: ");
+	print_array(temp + mid, end - mid);
 	printf("[Done]: ");
 	print_array(arr + start, end - start);
 }
