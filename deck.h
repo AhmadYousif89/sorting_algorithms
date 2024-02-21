@@ -5,6 +5,13 @@
 #include <string.h>
 #include <stdio.h>
 
+/**
+ * enum kind_e - Represents the suits in a standard deck of cards.
+ * @SPADE:   Spades suit.
+ * @HEART:   Hearts suit.
+ * @CLUB:    Clubs suit.
+ * @DIAMOND: Diamonds suit.
+ */
 typedef enum kind_e
 {
 	SPADE = 0,
