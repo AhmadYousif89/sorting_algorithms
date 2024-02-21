@@ -6,7 +6,7 @@
  *
  * Return: The numerical value of the card.
  */
-int get_value(deck_node_t *deck)
+int get_value(const deck_node_t *deck)
 {
 	int i, size;
 	const char *values[] = {
@@ -21,81 +21,62 @@ int get_value(deck_node_t *deck)
 }
 
 /**
- * swap_nodes - Swap two nodes in a doubly-linked list.
- * @deck: A pointer to the head of a deck_node_t doubly-linked list.
- * @a: First node to swap (previous to current node).
- * @b: Second node to swap (current node).
- */
-void swap_nodes(deck_node_t **deck, deck_node_t *a, deck_node_t *b)
-{
-	a->next = b->next;
-
-	if (b->next)
-		b->next->prev = a;
-
-	b->prev = a->prev;
-	b->next = a;
-
-	if (a->prev)
-		a->prev->next = b;
-	else
-		*deck = b;
-
-	a->prev = b;
-}
-
-typedef int (*compare_t)(deck_node_t *, deck_node_t *, int);
-/**
- * insertion_sort_deck - Sort a deck using insertion sort.
- * @deck: A pointer to the head of a deck_node_t doubly-linked list.
- * @compare: Pointer to the comparison function for sorting.
- * @sort_flag: Sorting flag (1 for sorting by kind, 0 for sorting by value).
- */
-void insertion_sort_deck(deck_node_t **deck, compare_t compare, int sort_flag)
-{
-	deck_node_t *current = (*deck)->next, *insert, *next;
-
-	while (current)
-	{
-		next = current->next;
-		insert = current->prev;
-		while (insert && compare(insert, current, sort_flag) > 0)
-		{
-			swap_nodes(deck, insert, current);
-			insert = current->prev;
-		}
-		current = next;
-	}
-}
-
-/**
- * compare - Compare two nodes based on the specified sorting strategy.
- * @a: First node to compare.
- * @b: Second node to compare.
- * @sort_flag: Sorting flag (1 for sorting by kind, 0 for sorting by value).
+ * compare_cards - Compare two cards based on the specified sorting strategy.
+ * @a: Pointer to the first card.
+ * @b: Pointer to the second card.
  *
- * Return: Positive if a > b, negative if a < b, 0 if equal.
+ * Return: Negative if a < b, positive if a > b, 0 if equal.
  */
-int compare(deck_node_t *a, deck_node_t *b, int sort_flag)
+int compare_cards(const void *a, const void *b)
 {
-	if (sort_flag)
-		return (a->card->kind - b->card->kind);
+	int kind_diff;
 
-	if (a->card->kind == b->card->kind)
-		return (get_value(a) - get_value(b));
+	const deck_node_t *card_a = *(const deck_node_t **)a;
+	const deck_node_t *card_b = *(const deck_node_t **)b;
 
-	return (0);
+	kind_diff = card_a->card->kind - card_b->card->kind;
+	if (kind_diff != 0)
+		return (kind_diff);
+
+	return (get_value(card_a) - get_value(card_b));
 }
 
 /**
- * sort_deck - Sort a deck of cards.
+ * sort_deck - Sort a deck of cards using qsort.
  * @deck: A pointer to the head of a deck_node_t doubly-linked list.
  */
 void sort_deck(deck_node_t **deck)
 {
+	size_t i, deck_size = 0;
+	deck_node_t *current;
+	deck_node_t **deck_array;
+
 	if (deck == NULL || *deck == NULL || (*deck)->next == NULL)
 		return;
 
-	insertion_sort_deck(deck, compare, 1); /* Sort kinds first */
-	insertion_sort_deck(deck, compare, 0); /* Sort values second */
+	for (current = *deck; current; current = current->next)
+		deck_size++;
+
+	deck_array = malloc(deck_size * sizeof(deck_node_t *));
+	if (deck_array == NULL)
+		return;
+
+	current = *deck;
+	for (i = 0; i < deck_size; current = current->next)
+		deck_array[i++] = current;
+
+	qsort(deck_array, deck_size, sizeof(deck_node_t *), compare_cards);
+
+	for (i = 0; i < deck_size - 1; i++)
+	{
+		deck_array[i]->next = deck_array[i + 1];
+		deck_array[i + 1]->prev = deck_array[i];
+	}
+
+	deck_array[0]->prev = NULL;
+	deck_array[deck_size - 1]->next = NULL;
+
+	*deck = deck_array[0];
+
+	free(deck_array);
 }
